@@ -37,5 +37,3 @@ Black hole simulation project
 for 2D: simple, just run 2D_lensing.cpp with the nessesary dependencies installed.
 
 for 3D: black_hole.cpp and geodesic.comp work together to run the simuation faster using GPU, essentially it sends over a UBO and geodesic.comp runs heavy calculations using that data.
-
-should work with nessesary dependencies installed, however I have only run it on windows with my GPU so am not sure!

@@ -156,6 +156,7 @@ struct Engine {
     GLuint texture;
     GLuint shaderProgram;
     GLuint computeProgram = 0;
+    GLuint gravityProgram = 0; // Add this to Engine struct
     // -- UBOs -- //
     GLuint cameraUBO = 0;
     GLuint diskUBO = 0;
@@ -168,8 +169,8 @@ struct Engine {
 
     int WIDTH = 800;  // Window width
     int HEIGHT = 600; // Window height
-    int COMPUTE_WIDTH  = 200;   // Compute resolution width
-    int COMPUTE_HEIGHT = 150;  // Compute resolution height
+    int COMPUTE_WIDTH  = 200;   // Lowered from 200
+    int COMPUTE_HEIGHT = 150;    // Lowered from 150
     float width = 100000000000.0f; // Width of the viewport in meters
     float height = 75000000000.0f; // Height of the viewport in meters
     
@@ -655,6 +656,7 @@ int main() {
         lastTime     = now;
 
         // Gravity
+        /*
         for (auto& obj : objects) {
             for (auto& obj2 : objects) {
                 if (&obj == &obj2) continue; // skip self-interaction
@@ -682,7 +684,7 @@ int main() {
                     }
             }
         }
-
+        */
 
 
         // ---------- GRID ------------- //
@@ -698,6 +700,11 @@ int main() {
         glViewport(0, 0, engine.WIDTH, engine.HEIGHT);
         engine.dispatchCompute(camera);
         engine.drawFullScreenQuad();
+
+        // Gravity on GPU
+        if (Gravity) {
+            engine.dispatchGravity(float(dt));
+        }
 
         // 6) present to screen
         glfwSwapBuffers(engine.window);
